@@ -159,7 +159,7 @@ export function WorldView({
 
         {/* right: quest card */}
         <aside className="absolute z-10 inset-x-3 bottom-[5.25rem] sm:inset-x-auto sm:bottom-auto sm:right-6 sm:top-6 sm:w-[23rem]">
-          <div className="panel animate-float-up !bg-paper/90 p-6" key={selected ?? "overview"}>
+          <div className="panel animate-float-up !bg-paper/90 p-5 sm:p-6" key={selected ?? "overview"}>
             {selectedNode ? (
               <QuestCard
                 node={selectedNode}
@@ -257,10 +257,10 @@ function Overview({
   return (
     <div>
       <p className="eyebrow !text-[0.62rem]">{signedIn ? `Welcome back, ${username}` : "Welcome, traveller"}</p>
-      <h2 className="title-serif mt-2 text-[2.1rem] leading-[1.05]">
+      <h2 className="title-serif mt-2 text-[1.7rem] leading-[1.05] sm:text-[2.1rem]">
         {allDone ? "You reached the summit!" : "Where to next?"}
       </h2>
-      <p className="mt-3 text-[0.95rem] leading-relaxed text-ink/80">
+      <p className="mt-3 hidden text-[0.95rem] leading-relaxed text-ink/80 sm:block">
         {allDone
           ? "Every quest is solved. The dragon sleeps soundly, and you've earned a long rest (or a replay)."
           : current
@@ -268,9 +268,9 @@ function Overview({
             : "Pick a stone on the map to read its story."}
       </p>
 
-      <div className="mt-4 flex flex-wrap gap-2">
+      <div className="mt-3 flex flex-wrap gap-2 sm:mt-4">
         <span className="chip">{solved} of {total} solved</span>
-        <span className="chip">Click a stone to explore</span>
+        <span className="chip hidden sm:inline-flex">Click a stone to explore</span>
       </div>
 
       {!signedIn && (
@@ -281,7 +281,7 @@ function Overview({
       )}
 
       {current && !allDone && (
-        <button onClick={onGo} className="btn btn-teal mt-5">
+        <button onClick={onGo} className="btn btn-teal mt-4 sm:mt-5">
           Go to next quest
         </button>
       )}

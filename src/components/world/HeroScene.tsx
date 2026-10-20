@@ -19,16 +19,15 @@ export default function HeroScene() {
   return (
     <Canvas
       shadows
-      flat
       dpr={[1, 1.75]}
       camera={{ fov: 34, position: [11.5, 7, 14.5] }}
       gl={{ alpha: true }}
       style={{ background: "transparent" }}
     >
-      <hemisphereLight args={["#fff7ea", "#ecd3bd", 1.15]} />
+      <hemisphereLight args={["#fff7ea", "#e8c9b0", 1.1]} />
       <directionalLight
         position={[8, 14, 7]}
-        intensity={1.5}
+        intensity={2.2}
         color="#fff1dc"
         castShadow
         shadow-mapSize={[1024, 1024]}

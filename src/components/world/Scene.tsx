@@ -53,7 +53,7 @@ function SunRig({ target }: { target: THREE.Vector3 }) {
   return (
     <directionalLight
       ref={light}
-      intensity={1.5}
+      intensity={2.1}
       color="#fff1dc"
       castShadow
       shadow-mapSize={[2048, 2048]}
@@ -253,13 +253,13 @@ function World({
       <color attach="background" args={[SKY]} />
       <fog attach="fog" args={[SKY, 45, 150]} />
 
-      <hemisphereLight args={["#fff7ea", "#ecd3bd", 1.15]} />
+      <hemisphereLight args={["#fff7ea", "#e8c9b0", 1.05]} />
       <SunRig target={mascotPos} />
 
       {/* water */}
-      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -2.3, -50]} receiveShadow>
+      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -2.3, -50]}>
         <planeGeometry args={[600, 600]} />
-        <meshStandardMaterial color="#cdeaef" roughness={0.3} />
+        <meshBasicMaterial color="#d6eef0" toneMapped={false} />
       </mesh>
 
       {layout.islands.map((island, i) => (
@@ -305,7 +305,6 @@ export default function WorldScene({
   return (
     <Canvas
       shadows
-      flat
       dpr={[1, 1.75]}
       camera={{ fov: 38, near: 0.5, far: 400, position: [3, 14, 22] }}
       gl={{ antialias: true, powerPreference: "high-performance" }}

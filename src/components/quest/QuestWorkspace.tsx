@@ -180,7 +180,7 @@ export function QuestWorkspace({
             <MascotStage mood={mood} />
           </div>
 
-          <p className="eyebrow mt-6 !text-[0.62rem]">
+          <p className="eyebrow mt-6 max-w-[60%] !text-[0.62rem] sm:max-w-none">
             {regionName} · Quest {quest.order}
           </p>
           <h1 className="title-serif mt-2 max-w-[75%] text-[2.4rem] leading-[1.05] sm:text-[2.9rem]">
