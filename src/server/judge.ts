@@ -25,6 +25,23 @@ import type {
 const PER_TEST_TIMEOUT_MS = 1000;
 const TOTAL_TIMEOUT_MS = 10_000;
 const MAX_RESULT_CHARS = 50_000;
+const MAX_CONCURRENT_RUNS = 4;
+
+// Tiny semaphore so a burst of submissions can't fork-bomb the server.
+let active = 0;
+const waiting: Array<() => void> = [];
+async function acquire() {
+  if (active < MAX_CONCURRENT_RUNS) {
+    active++;
+    return;
+  }
+  await new Promise<void>((resolve) => waiting.push(resolve));
+}
+function release() {
+  const next = waiting.shift();
+  if (next) next(); // hand the slot straight to the next waiter
+  else active--;
+}
 
 const RUNNER = String.raw`
 const vm = require("node:vm");
@@ -100,7 +117,7 @@ function execRunner(
     const child = spawn(
       process.execPath,
       ["--permission", "--max-old-space-size=96", "-e", RUNNER],
-      { env: {}, stdio: ["pipe", "pipe", "pipe"] },
+      { env: {} as NodeJS.ProcessEnv, stdio: ["pipe", "pipe", "pipe"] },
     );
 
     let stdout = "";
@@ -206,11 +223,17 @@ export async function judge(
     return base("compile_error", "Solution is too long (20,000 characters max).");
   }
 
-  const output = await execRunner(
-    code,
-    problem.fn,
-    tests.map((t) => JSON.stringify(t.args)),
-  );
+  await acquire();
+  let output: Awaited<ReturnType<typeof execRunner>>;
+  try {
+    output = await execRunner(
+      code,
+      problem.fn,
+      tests.map((t) => JSON.stringify(t.args)),
+    );
+  } finally {
+    release();
+  }
 
   if ("failure" in output) {
     return base(

@@ -1,3 +1,4 @@
+import "server-only";
 import type { Difficulty, Example, TestCase } from "@/lib/types";
 
 export interface ProblemSeed {

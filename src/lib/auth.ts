@@ -19,6 +19,9 @@ function secretKey() {
   return new TextEncoder().encode(secret);
 }
 
+/** Compared against when a user is unknown, so response time doesn't reveal which accounts exist. */
+export const DUMMY_HASH = bcrypt.hashSync(crypto.randomUUID(), 10);
+
 export function hashPassword(password: string) {
   return bcrypt.hash(password, 10);
 }

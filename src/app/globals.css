@@ -1,26 +1,254 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --cream: #fdf4e6;
+  --cream-2: #fbe9e1;
+  --paper: #fffaf2;
+  --ink: #3b2a2a;
+  --muted: #8f7a6e;
+  --line: #ecd9cc;
+  --berry: #d6384a;
+  --berry-deep: #b92b3c;
+  --berry-soft: #fbdadd;
+  --leaf: #5b9a5f;
+  --teal: #5db4a0;
+  --teal-deep: #489a87;
+  --honey: #e8b04a;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-cream: var(--cream);
+  --color-cream-2: var(--cream-2);
+  --color-paper: var(--paper);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-berry: var(--berry);
+  --color-berry-deep: var(--berry-deep);
+  --color-berry-soft: var(--berry-soft);
+  --color-leaf: var(--leaf);
+  --color-teal: var(--teal);
+  --color-teal-deep: var(--teal-deep);
+  --color-honey: var(--honey);
+
+  --font-sans: var(--font-jost), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-playfair), ui-serif, Georgia, serif;
+  --font-script: var(--font-script), "Brush Script MT", cursive;
+  --font-mono: ui-monospace, "SF Mono", Menlo, monospace;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  background: var(--cream);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  min-height: 100vh;
+  color: var(--ink);
+  font-family: var(--font-sans);
+  background:
+    radial-gradient(1200px 600px at 85% -10%, rgba(251, 218, 221, 0.7), transparent 60%),
+    radial-gradient(900px 500px at -10% 110%, rgba(214, 233, 190, 0.45), transparent 60%),
+    linear-gradient(180deg, #fdf6e8 0%, #fcefe6 100%);
+  background-attachment: fixed;
+}
+
+::selection {
+  background: var(--berry-soft);
+}
+
+/* ───────── Typography helpers ───────── */
+.eyebrow {
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+
+.script {
+  font-family: var(--font-script);
+  font-weight: 400;
+  line-height: 1;
+}
+
+.title-serif {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 600;
+  color: var(--berry);
+  letter-spacing: -0.01em;
+}
+
+/* ───────── Surfaces ───────── */
+.panel {
+  background: rgba(255, 252, 246, 0.72);
+  border: 1px solid rgba(236, 217, 204, 0.8);
+  border-radius: 28px;
+  box-shadow: 0 30px 60px -30px rgba(120, 60, 50, 0.25);
+  backdrop-filter: blur(10px);
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.45rem 0.9rem;
+  border-radius: 999px;
+  background: rgba(255, 250, 240, 0.9);
+  border: 1px solid var(--line);
+  box-shadow: 0 6px 16px -10px rgba(120, 60, 50, 0.4);
+  font-size: 0.85rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.3rem 0.65rem;
+  border-radius: 999px;
+  border: 1px dashed rgba(214, 56, 74, 0.55);
+  color: var(--berry-deep);
+  font-size: 0.62rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  background: rgba(255, 255, 255, 0.35);
+}
+
+.chip-solid {
+  border-style: solid;
+  background: var(--berry-soft);
+}
+
+/* ───────── Buttons ───────── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.7rem 1.4rem;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease, opacity 0.15s;
+  user-select: none;
+}
+.btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+.btn:not(:disabled):hover {
+  transform: translateY(-1px);
+}
+.btn:not(:disabled):active {
+  transform: translateY(1px);
+}
+
+.btn-teal {
+  color: #fff;
+  background: linear-gradient(180deg, #6cc0ac, var(--teal-deep));
+  box-shadow: 0 12px 22px -12px rgba(72, 154, 135, 0.9);
+}
+.btn-berry {
+  color: #fff;
+  background: linear-gradient(180deg, #e55a6b, var(--berry-deep));
+  box-shadow: 0 12px 22px -12px rgba(185, 43, 60, 0.9);
+}
+.btn-ghost {
+  color: var(--ink);
+  background: rgba(255, 250, 240, 0.85);
+  border: 1px solid var(--line);
+}
+
+.field {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  border-radius: 16px;
+  border: 1px solid var(--line);
+  background: rgba(255, 252, 246, 0.9);
+  font-size: 0.95rem;
+  outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.field:focus {
+  border-color: var(--berry);
+  box-shadow: 0 0 0 4px rgba(214, 56, 74, 0.12);
+}
+
+/* Inline code in prose */
+.prose-quest code {
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+  padding: 0.12em 0.4em;
+  border-radius: 8px;
+  background: var(--berry-soft);
+  color: var(--berry-deep);
+}
+
+/* ───────── Animations ───────── */
+@keyframes float-up {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.animate-float-up {
+  animation: float-up 0.5s ease both;
+}
+
+@keyframes berry-fall {
+  0% {
+    transform: translateY(-10vh) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(110vh) rotate(540deg);
+    opacity: 0.9;
+  }
+}
+
+@keyframes pop {
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.04);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+.animate-pop {
+  animation: pop 0.45s cubic-bezier(0.2, 0.9, 0.3, 1.2) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* CodeMirror tweaks to fit the cream theme */
+.cm-editor {
+  border-radius: 18px;
+  font-size: 14px;
+}
+.cm-editor.cm-focused {
+  outline: none;
 }
