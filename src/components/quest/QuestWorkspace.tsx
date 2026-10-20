@@ -50,11 +50,14 @@ export function QuestWorkspace({
   const draftKey = `bq:draft:${userId}:${quest.slug}`;
 
   const [code, setCode] = useState(() => {
-    try {
-      const draft = localStorage.getItem(draftKey);
-      if (draft) return draft;
-    } catch {
-      /* not available during SSR */
+    // Only the browser has a draft; skip storage entirely while server-rendering.
+    if (typeof window !== "undefined") {
+      try {
+        const draft = window.localStorage.getItem(draftKey);
+        if (draft) return draft;
+      } catch {
+        /* storage blocked */
+      }
     }
     return quest.savedCode ?? quest.starterCode;
   });

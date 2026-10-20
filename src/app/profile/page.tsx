@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Suspense } from "react";
+import { connection } from "next/server";
 import { redirect } from "next/navigation";
 import { getCurrentUser } from "@/lib/auth";
 import { computeBadges, levelProgress, titleForLevel } from "@/lib/game";
@@ -11,6 +12,7 @@ import { BerryIcon, HeartIcon } from "@/components/ui/icons";
 export const metadata: Metadata = { title: "Journal" };
 
 async function Journal() {
+  await connection(); // request-time render: runs before any DB I/O
   const user = await getCurrentUser();
   if (!user) redirect("/login?next=/profile");
 

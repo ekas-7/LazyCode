@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
+import { connection } from "next/server";
 import { getCurrentUser } from "@/lib/auth";
 import { getWorld } from "@/server/queries";
 import { WorldView } from "@/components/world/WorldView";
@@ -8,6 +9,7 @@ import { BerryIcon } from "@/components/ui/icons";
 export const metadata: Metadata = { title: "The Journey" };
 
 async function World() {
+  await connection(); // request-time render: runs before any DB I/O
   const user = await getCurrentUser();
   const world = await getWorld(user?._id ?? null);
   return (

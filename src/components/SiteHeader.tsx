@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Suspense } from "react";
+import { connection } from "next/server";
 import { getCurrentUser } from "@/lib/auth";
 import { levelForXp, titleForLevel } from "@/lib/game";
 import { BerryIcon, HeartIcon } from "./ui/icons";
@@ -7,6 +8,7 @@ import { LogoutButton } from "./LogoutButton";
 import { NavLinks, NavLinksFallback } from "./NavLinks";
 
 async function HeaderUser() {
+  await connection(); // request-time render: runs before any DB I/O
   const user = await getCurrentUser();
 
   if (!user) {

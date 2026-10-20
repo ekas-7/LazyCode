@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Suspense } from "react";
+import { connection } from "next/server";
 import { notFound, redirect } from "next/navigation";
 import { getCurrentUser } from "@/lib/auth";
 import { getPublicQuest, getRegion } from "@/server/queries";
@@ -10,6 +11,7 @@ import { BerryIcon, LockIcon } from "@/components/ui/icons";
 export const metadata: Metadata = { title: "Quest" };
 
 async function Quest({ params }: { params: Promise<{ slug: string }> }) {
+  await connection(); // request-time render: runs before any DB I/O
   const { slug } = await params;
   const user = await getCurrentUser();
   if (!user) redirect(`/login?next=${encodeURIComponent(`/quest/${slug}`)}`);

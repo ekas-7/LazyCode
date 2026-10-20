@@ -1,10 +1,12 @@
 import { Suspense } from "react";
+import { connection } from "next/server";
 import { redirect } from "next/navigation";
 import { getCurrentUser } from "@/lib/auth";
 import { AuthForm } from "./AuthForm";
 import { BerryIcon } from "./ui/icons";
 
 async function RedirectIfSignedIn({ next }: { next?: string }) {
+  await connection(); // request-time render: runs before any DB I/O
   const user = await getCurrentUser();
   if (user) {
     redirect(next && next.startsWith("/") && !next.startsWith("//") ? next : "/world");
