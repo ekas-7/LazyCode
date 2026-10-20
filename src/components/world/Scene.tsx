@@ -53,7 +53,7 @@ function SunRig({ target }: { target: THREE.Vector3 }) {
   return (
     <directionalLight
       ref={light}
-      intensity={2.1}
+      intensity={1.5}
       color="#fff1dc"
       castShadow
       shadow-mapSize={[2048, 2048]}
@@ -173,7 +173,9 @@ function CameraRig({
 }) {
   const controls = useRef<ElementRef<typeof OrbitControls>>(null);
   const camera = useThree((s) => s.camera);
+  const size = useThree((s) => s.size);
   const goal = useRef(new THREE.Vector3());
+  const right = useRef(new THREE.Vector3());
   const initialised = useRef(false);
 
   useFrame((_, dt) => {
@@ -182,11 +184,20 @@ function CameraRig({
     if (focus) goal.current.set(focus.x, 0, focus.z);
     else goal.current.copy(mascotPos);
 
+    // On wide screens a quest card floats on the right, so look a little to its
+    // right of the subject. That slides the subject towards the left/centre.
+    if (size.width > 900) {
+      right.current.set(1, 0, 0).applyQuaternion(camera.quaternion);
+      right.current.y = 0;
+      right.current.normalize();
+      goal.current.addScaledVector(right.current, 0.6);
+    }
+
     if (!initialised.current) {
       // Snap on the first frame so we don't fly across the whole map on load.
       initialised.current = true;
       c.target.copy(goal.current);
-      camera.position.set(goal.current.x + 2, 11, goal.current.z + 17);
+      camera.position.set(goal.current.x + 3, 14, goal.current.z + 22);
       c.update();
       return;
     }
@@ -242,13 +253,13 @@ function World({
       <color attach="background" args={[SKY]} />
       <fog attach="fog" args={[SKY, 45, 150]} />
 
-      <hemisphereLight args={["#fff7ea", "#e8c9b0", 1.05]} />
+      <hemisphereLight args={["#fff7ea", "#ecd3bd", 1.15]} />
       <SunRig target={mascotPos} />
 
       {/* water */}
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -2.3, -50]} receiveShadow>
         <planeGeometry args={[600, 600]} />
-        <meshStandardMaterial color="#bfe4ea" roughness={0.25} />
+        <meshStandardMaterial color="#cdeaef" roughness={0.3} />
       </mesh>
 
       {layout.islands.map((island, i) => (
@@ -294,8 +305,9 @@ export default function WorldScene({
   return (
     <Canvas
       shadows
+      flat
       dpr={[1, 1.75]}
-      camera={{ fov: 38, near: 0.5, far: 400, position: [0, 11, 17] }}
+      camera={{ fov: 38, near: 0.5, far: 400, position: [3, 14, 22] }}
       gl={{ antialias: true, powerPreference: "high-performance" }}
       onPointerMissed={() => onSelect(null)}
       aria-label="3D map of your coding journey. Use the quest list for keyboard access."

@@ -91,7 +91,7 @@ export function WorldView({
     <div className="mx-auto w-full max-w-[1500px] flex-1 px-4 pb-2 sm:px-8">
       <div className="panel relative h-[calc(100svh-150px)] min-h-[640px] overflow-hidden !rounded-[34px]">
         {/* 3D canvas */}
-        <div className="absolute inset-0">
+        <div className="absolute inset-0 isolate z-0">
           {webgl === false ? (
             <div className="grid h-full place-items-center p-8 text-center">
               <div>
@@ -115,7 +115,7 @@ export function WorldView({
         </div>
 
         {/* left: title + regions */}
-        <div className="pointer-events-none absolute left-6 top-6 hidden w-[17rem] lg:block">
+        <div className="pointer-events-none absolute left-6 top-6 z-10 hidden w-[17rem] lg:block">
           <Link
             href="/"
             className="eyebrow pointer-events-auto inline-flex items-center gap-2 !text-[0.62rem] transition hover:text-berry"
@@ -158,7 +158,7 @@ export function WorldView({
         </div>
 
         {/* right: quest card */}
-        <aside className="absolute inset-x-3 bottom-[5.25rem] sm:inset-x-auto sm:bottom-auto sm:right-6 sm:top-6 sm:w-[23rem]">
+        <aside className="absolute z-10 inset-x-3 bottom-[5.25rem] sm:inset-x-auto sm:bottom-auto sm:right-6 sm:top-6 sm:w-[23rem]">
           <div className="panel animate-float-up !bg-paper/90 p-6" key={selected ?? "overview"}>
             {selectedNode ? (
               <QuestCard
@@ -184,7 +184,7 @@ export function WorldView({
         </aside>
 
         {/* bottom strip */}
-        <div className="absolute inset-x-3 bottom-3 sm:inset-x-6">
+        <div className="absolute inset-x-3 bottom-3 z-10 sm:inset-x-6">
           <div className="panel flex items-center gap-1.5 overflow-x-auto !rounded-[22px] !bg-paper/85 px-3 py-2.5">
             <span className="eyebrow mr-2 hidden shrink-0 !text-[0.58rem] text-muted sm:block">
               {webgl === false ? "Quests" : "Drag to look around"}

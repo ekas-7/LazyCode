@@ -19,15 +19,16 @@ export default function HeroScene() {
   return (
     <Canvas
       shadows
+      flat
       dpr={[1, 1.75]}
-      camera={{ fov: 34, position: [9.5, 6.5, 11] }}
+      camera={{ fov: 34, position: [11.5, 7, 14.5] }}
       gl={{ alpha: true }}
       style={{ background: "transparent" }}
     >
-      <hemisphereLight args={["#fff7ea", "#e8c9b0", 1.1]} />
+      <hemisphereLight args={["#fff7ea", "#ecd3bd", 1.15]} />
       <directionalLight
         position={[8, 14, 7]}
-        intensity={2.2}
+        intensity={1.5}
         color="#fff1dc"
         castShadow
         shadow-mapSize={[1024, 1024]}
@@ -38,7 +39,7 @@ export default function HeroScene() {
         shadow-bias={-0.0005}
       />
 
-      <group position={[0, -1.2, 0]}>
+      <group position={[0, -2.3, 0]}>
         {/* island */}
         <mesh position={[0, -0.25, 0]} receiveShadow>
           <cylinderGeometry args={[6, 6, 0.5, 48]} />
