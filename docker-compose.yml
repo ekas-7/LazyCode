@@ -1,0 +1,12 @@
+services:
+  mongo:
+    image: mongo:7
+    container_name: berry-quest-mongo
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    volumes:
+      - berry-quest-data:/data/db
+
+volumes:
+  berry-quest-data:
